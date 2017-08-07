@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import reload from 'express-reload';
 
 const app = express();
 

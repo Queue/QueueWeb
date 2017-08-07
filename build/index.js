@@ -8,10 +8,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _expressReload = require('express-reload');
-
-var _expressReload2 = _interopRequireDefault(_expressReload);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
