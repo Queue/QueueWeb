@@ -11,11 +11,11 @@
     "watch": "watch 'yarn build' ./app"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-env": "^1.6.0",
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "firebase": "^4.2.0",
