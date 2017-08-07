@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)();
 
 app.get('/', function (req, res) {
-  res.send('Hello World!!!!');
+  res.send('Hello World!');
 });
 
 var port = process.env.PORT || 3000;
