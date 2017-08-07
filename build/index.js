@@ -17,9 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)();
 
 app.get('/', function (req, res) {
-  res.send('Hello WOrld!!!!');
+  res.send('Hello World!!!!');
 });
 
-app.listen(3000, function () {
+var port = process.env.PORT || 3000;
+app.listen(port, function () {
   console.log('Queue App is running on http://localhost:3000');
 });

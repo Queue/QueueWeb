@@ -8,6 +8,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!!!!');
 });
 
-app.listen(3000, () => {
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log('Queue App is running on http://localhost:3000');
 });
