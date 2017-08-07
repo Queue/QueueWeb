@@ -10,5 +10,5 @@ app.get('/', (req, res) => {
 
 let port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log('Queue App is running on http://localhost:3000');
+  console.log(`Queue App is running on http://localhost:${port}`);
 });
