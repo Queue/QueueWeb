@@ -1,0 +1,25 @@
+{
+  "name": "Queue",
+  "version": "1.0.0",
+  "description": "Queue wab app for mobile Queue app",
+  "main": "./app/index.js",
+  "author": "Christopher C. Wahlfeldt",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./build",
+    "build": "babel ./app --out-dir ./build --copy-files",
+    "watch": "watch 'yarn build' ./app"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "body-parser": "^1.17.2",
+    "express-reload": "^1.1.0",
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "express": "^4.15.4",
+    "firebase": "^4.2.0",
+    "pug": "^2.0.0-rc.3"
+  }
+}
