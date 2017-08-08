@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
 app.get('/queue/:uid', async (req, res) => {
   try {
     const queuers = await firebase.database().ref(`queuers/${req.params.uid}`).once('value').then(snap => {
+      console.log('loaded data')
       return snap.val();
     });
     res.render('queue', { queuers });

@@ -5,6 +5,9 @@
   "main": "./app/index.js",
   "author": "Christopher C. Wahlfeldt",
   "license": "MIT",
+  "engines": {
+    "node": "^8.2.1"
+  },
   "scripts": {
     "start": "nodemon ./build",
     "build": "babel ./app --out-dir ./build --copy-files",
