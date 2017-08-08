@@ -5,23 +5,33 @@ import 'babel-polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as firebase from 'firebase';
-import config from './lib/firebase-creds';
+
+let config = null;
+
+if (typeof process.env.API_KEY === 'string') {
+  config = {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseURL: process.env.DATABASE_URL,
+  };
+} else {
+  config = require('./lib/firebase-creds.js');
+}
 
 // init firebase
 firebase.initializeApp(config);
 
-// create express app
+// express config
 const app = express();
-
 app.set('view engine', 'pug');
 app.set('views', `${__dirname}/templates`);
 
-// homepage
+// front page
 app.get('/', (req, res) => {
-  res.send('Home page');
+  res.render('front');
 });
 
-// queue
+// queue page per user
 app.get('/queue/:uid', async (req, res) => {
   try {
     const queuers = await firebase.database().ref(`queuers/${req.params.uid}`).once('value').then(snap => {
