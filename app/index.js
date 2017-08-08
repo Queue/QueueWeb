@@ -41,6 +41,7 @@ app.get('/queue/:uid', async (req, res) => {
     console.log(queuers);
     res.render('queue', { queuers });
   } catch(error) {
+    res.send(error);
     console.log(error.message);
   }
 });

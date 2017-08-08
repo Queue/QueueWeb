@@ -64,22 +64,23 @@ app.get('/queue/:uid', function () {
           case 3:
             queuers = _context.sent;
 
+            console.log(queuers);
             res.render('queue', { queuers: queuers });
-            _context.next = 10;
+            _context.next = 11;
             break;
 
-          case 7:
-            _context.prev = 7;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context['catch'](0);
 
             console.log(_context.t0.message);
 
-          case 10:
+          case 11:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[0, 7]]);
+    }, _callee, undefined, [[0, 8]]);
   }));
 
   return function (_x, _x2) {
