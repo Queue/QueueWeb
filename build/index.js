@@ -57,6 +57,7 @@ app.get('/queue/:uid', function () {
             _context.prev = 0;
             _context.next = 3;
             return firebase.database().ref('queuers/' + req.params.uid).once('value').then(function (snap) {
+              console.log('loaded data');
               return snap.val();
             });
 

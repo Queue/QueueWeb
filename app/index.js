@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
 
 // queue page per user
 app.get('/queue/:uid', async (req, res) => {
-  console.log('loading')
   try {
+    console.log('loading')
     const queuers = await firebase.database().ref(`queuers/${req.params.uid}`).once('value').then(snap => {
       console.log('loaded data')
       return snap.val();
