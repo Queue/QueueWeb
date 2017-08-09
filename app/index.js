@@ -34,12 +34,13 @@ app.get('/', (req, res) => {
 // queue page per user
 app.get('/queue/:uid', async (req, res) => {
   try {
-    const queuers = await firebase.database().ref(`queuers/${req.params.uid}`).once('value').then(snap => {
-      console.log('loaded data')
-      return snap.val();
+    firebase.database().ref(`queuers/${req.params.uid}`).on('value', snap => {
+      if (snap.val() === null) {
+        res.render('no-queuers');
+      } else {
+        res.render('queue', { queuers: snap.val() });
+      }
     });
-    console.log(queuers);
-    res.render('queue', { queuers });
   } catch(error) {
     res.send(error);
     console.log(error.message);

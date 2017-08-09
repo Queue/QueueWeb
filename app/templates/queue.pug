@@ -1,4 +1,6 @@
 extends layout
 
 block content
-  p #{JSON.stringify(queuers)}
+  ul
+    each val, index in queuers
+      li= val.name
