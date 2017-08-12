@@ -3,5 +3,5 @@ npm-debug.log
 .DS_Store
 /*.env
 yarn-error.log
-/app/lib/firebase-creds.js
 /build
+/src/firebase-creds.js
