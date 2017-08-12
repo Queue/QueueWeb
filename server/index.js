@@ -17,11 +17,13 @@ if (typeof process.env.API_KEY === 'string') {
   config = require('../src/firebase-creds.js');
 }
 
+console.log(config);
+
 const app = express();
 
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
 
-//app.use(helmet());
+app.use(helmet());
 
 app.get('/', (req, res) => {
   res.send('Home');
