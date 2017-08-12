@@ -3,6 +3,7 @@
 
 import express from 'express';
 import path from 'path';
+import helmet from 'helmet';
 
 let config = null;
 
@@ -18,9 +19,9 @@ if (typeof process.env.API_KEY === 'string') {
 
 const app = express();
 
-app.disable('x-powered-by');
-
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
+
+//app.use(helmet());
 
 app.get('/', (req, res) => {
   res.send('Home');
@@ -46,7 +47,7 @@ app.get('/creds', (req, res) => {
   }
 });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Queue App is running on http://localhost:${port}`);
