@@ -43,8 +43,10 @@ app.get('/queue', (req, res) => {
 app.get('/creds', (req, res) => {
   // restrict to localhost only
   if (req.ip === '127.0.0.1' || req.ip === '::1') {
+    console.log('creds accepted');
     res.send(JSON.stringify(config));
   } else {
+    console.log('creds denied');
     res.send('ACCESS DENIED');
   }
 });
