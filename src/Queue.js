@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import creds from './firebase-creds';
-import firebase from 'firebase';;
+import firebase from 'firebase';
 
 export default class Queue extends Component {
   constructor(props) {
     super(props);
-
-    firebase.initializeApp(creds);
 
     this.state = {
       data: [],
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const creds = await fetch('/creds').then(res => {
+      return res.json();
+    }).catch(error => {
+      console.log(error.message);
+    });
+
+    firebase.initializeApp(creds);
+
     firebase
       .database()
       .ref(`queuers/${this.props.match.params.uid}`)

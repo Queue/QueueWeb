@@ -4,4 +4,4 @@ npm-debug.log
 /*.env
 yarn-error.log
 /build
-/src/firebase-creds.js
+firebase-creds.js

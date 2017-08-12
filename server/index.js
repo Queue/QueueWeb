@@ -4,7 +4,21 @@
 import express from 'express';
 import path from 'path';
 
+let config = null;
+
+if (typeof process.env.API_KEY === 'string') {
+  config = {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseURL: process.env.DATABASE_URL,
+  };
+} else {
+  config = require('../src/firebase-creds.js');
+}
+
 const app = express();
+
+app.disable('x-powered-by');
 
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
 
@@ -23,7 +37,16 @@ app.get('/queue', (req, res) => {
   res.send('ACCESS DENIED');
 });
 
-const port = process.env.PORT || 3000;
+app.get('/creds', (req, res) => {
+  // restrict to localhost only
+  if (req.ip === '127.0.0.1' || req.ip === '::1') {
+    res.send(JSON.stringify(config));
+  } else {
+    res.send('ACCESS DENIED');
+  }
+});
+
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
   console.log(`Queue App is running on http://localhost:${port}`);
