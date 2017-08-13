@@ -4,6 +4,7 @@
 import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
+import ip from 'ip';
 
 let config = null;
 
@@ -17,7 +18,7 @@ if (typeof process.env.API_KEY === 'string') {
   config = require('../src/firebase-creds.js');
 }
 
-console.log(config);
+console.log(ip.address());
 
 const app = express();
 
@@ -43,7 +44,7 @@ app.get('/queue', (req, res) => {
 app.get('/creds', (req, res) => {
   // restrict to localhost only
   console.log(req.ip);
-  if (req.ip === '127.0.0.1' || req.ip === '::1') {
+  if (req.ip === ip.address()) {
     console.log('creds accepted');
     res.send(JSON.stringify(config));
   } else {
