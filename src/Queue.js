@@ -11,7 +11,7 @@ export default class Queue extends Component {
   }
 
   async componentDidMount() {
-    const creds = await fetch('/creds').then(res => {
+    const creds = await fetch('/creds', {method: 'POST'}).then(res => {
       return res.json();
     }).catch(error => {
       console.log(error.message);

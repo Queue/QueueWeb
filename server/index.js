@@ -4,7 +4,8 @@
 import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
-import ip from 'ip';
+
+const ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
 let config = null;
 
@@ -41,16 +42,8 @@ app.get('/queue', (req, res) => {
   res.send('ACCESS DENIED');
 });
 
-app.get('/creds', (req, res) => {
-  // restrict to localhost only
-  console.log(`${req.ip} === ${ip.address()}`);
-  if (req.ip === ip.address()) {
-    console.log('creds accepted');
-    res.send(JSON.stringify(config));
-  } else {
-    console.log('creds denied');
-    res.send('ACCESS DENIED');
-  }
+app.post('/creds', (req, res) => {
+  res.send(JSON.stringify(config));
 });
 
 const port = process.env.PORT || 3000;
