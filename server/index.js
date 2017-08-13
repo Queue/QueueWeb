@@ -43,7 +43,7 @@ app.get('/queue', (req, res) => {
 
 app.get('/creds', (req, res) => {
   // restrict to localhost only
-  console.log(req.ip);
+  console.log(`req.ip === ${ip.address()}`);
   if (req.ip === ip.address()) {
     console.log('creds accepted');
     res.send(JSON.stringify(config));
