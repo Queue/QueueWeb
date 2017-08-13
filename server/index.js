@@ -4,6 +4,7 @@
 import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
+import cors from 'cors';
 
 let config = null;
 
@@ -22,6 +23,7 @@ const app = express();
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
 
 app.use(helmet());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Home');
