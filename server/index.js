@@ -5,8 +5,6 @@ import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
 
-const ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-
 let config = null;
 
 if (typeof process.env.API_KEY === 'string') {
@@ -18,8 +16,6 @@ if (typeof process.env.API_KEY === 'string') {
 } else {
   config = require('../src/firebase-creds.js');
 }
-
-console.log(ip.address());
 
 const app = express();
 
