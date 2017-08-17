@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import creds from './firebase-creds';
 
 export default class Queue extends Component {
   constructor(props) {
     super(props);
+
+    firebase.initializeApp(creds);
 
     this.state = {
       data: [],
@@ -11,14 +14,6 @@ export default class Queue extends Component {
   }
 
   async componentDidMount() {
-    const creds = await fetch('/creds', {method: 'POST'}).then(res => {
-      return res.json();
-    }).catch(error => {
-      console.log(error.message);
-    });
-
-    firebase.initializeApp(creds);
-
     firebase
       .database()
       .ref(`queuers/${this.props.match.params.uid}`)
@@ -47,9 +42,9 @@ export default class Queue extends Component {
     return (
       <div className="queue">
         <h1>QUEUE</h1>
-        <ul>
+        <ol>
           {this.queueItems()}
-        </ul>
+        </ol>
       </div>
     );
   }

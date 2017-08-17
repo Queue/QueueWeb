@@ -14,44 +14,27 @@ var _helmet2 = _interopRequireDefault(_helmet);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var config = null; //
+var app = (0, _express2.default)(); //
 // Server for React app and WebHooks
-
-if (typeof process.env.API_KEY === 'string') {
-  config = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    databaseURL: process.env.DATABASE_URL
-  };
-} else {
-  config = require('../src/firebase-creds.js');
-}
-
-var app = (0, _express2.default)();
 
 app.use('/static', _express2.default.static(_path2.default.resolve(__dirname + '/../build/static')));
 
-//app.use(helmet());
+app.set('view engine', 'pug');
+app.set('views', __dirname + '/views/');
+
+app.use((0, _helmet2.default)());
 
 app.get('/', function (req, res) {
   res.send('Home');
 });
 
 app.get('/queue/:uid*', function (req, res) {
-  res.sendFile('index.html', { root: _path2.default.resolve(__dirname + '/../build/') });
+  res.sendFile(_path2.default.resolve(__dirname + '/../build/index.html'));
 });
 
+// must be exact
 app.get('/queue', function (req, res) {
   res.send('ACCESS DENIED');
-});
-
-app.get('/creds', function (req, res) {
-  // restrict to localhost only
-  if (req.ip === '127.0.0.1' || req.ip === '::1') {
-    res.send(JSON.stringify(config));
-  } else {
-    res.send('ACCESS DENIED');
-  }
 });
 
 var port = process.env.PORT || 3000;

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import Queue from './Queue';
 import { Route, Switch } from 'react-router';
 
