@@ -16,14 +16,16 @@ export default class Queue extends Component {
   async componentDidMount() {
     firebase
       .database()
-      .ref(`queuers/${this.props.match.params.uid}`)
+      .ref(`queuers/public/${this.props.match.params.uid}`)
       .on('value', snap => {
+        console.log(snap.key);
         const queuers = snap.val();
         const data = [];
         for (const queuer in queuers) {
           const item = queuers[queuer];
-          if (item.removed || item.seated) continue;
+          if (item.removed || item.seated || item.cancelled) continue;
           data.push(item);
+          console.log(item);
         }
         this.setState({data});
       });
