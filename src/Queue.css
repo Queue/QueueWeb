@@ -9,6 +9,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   color: #333;
+  padding-bottom: 112px;
 }
 
 .queue {
@@ -59,6 +60,7 @@ body {
   padding: 5px 0;
   font-size: 12px;
   letter-spacing: 1px;
+  top: 20;
 }
 
 .footer a {
