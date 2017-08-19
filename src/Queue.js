@@ -52,7 +52,7 @@ export default class Queue extends Component {
           </ol>
         </div>
         <footer className="footer">
-          <p>&copy; COPYRIGHT { new Date().getFullYear().toString() + ' // ' } <a href="https://queueup.site" target="_blank" rel="noopener noreferrer">Queue</a></p>
+          <p>&copy; COPYRIGHT { new Date().getFullYear().toString() + ' // ' } <a href="https://www.queueup.site" target="_blank" rel="noopener noreferrer">Queue</a></p>
         </footer>
       </div>
     );
