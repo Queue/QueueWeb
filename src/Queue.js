@@ -20,15 +20,15 @@ export default class Queue extends Component {
       .ref(`queuers/public/${this.props.match.params.uid}`)
       .on('value', snap => {
         const queuers = snap.val();
-        console.log(snap.val());
         const data = [];
+        let query = new URLSearchParams(this.props.location.search); 
         for (const queuer in queuers) {
           const item = queuers[queuer];
           if (item.removed || item.seated || item.cancelled) continue;
-          item.key = snap.key;
+          item.key = queuer;
+          if (item.key === query.get('key')) item.name = `${item.name} \u2190`;
           data.push(item);
         }
-        console.log(data);
         this.setState({data});
       });
   }
@@ -37,7 +37,7 @@ export default class Queue extends Component {
     const queuers = this.state.data;
     return queuers.map(
       queuer => (
-        <li key={queuer.name} className="queuer">{queuer.name}</li>
+        <li key={queuer.key} className="queuer">{queuer.name}</li>
       )
     );
   }
