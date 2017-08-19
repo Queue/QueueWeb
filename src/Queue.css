@@ -1,0 +1,72 @@
+/* Queue css */
+
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  background: #eaeaea;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #333;
+}
+
+.queue {
+  max-width: 768px;
+  padding-top: 10px;
+  background:white;
+}
+
+.queue-items {
+  list-style: none;
+  padding: 0;
+  counter-reset: section;
+}
+
+.queuer {
+  flex-wrap: wrap;
+  font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 25px;
+  margin-top: -1px;
+  border-top: solid 1px #eaeaea;
+  border-bottom: solid 1px #eaeaea;
+}
+
+.queuer:before {
+  counter-increment: section;
+  content: counters(section, ".") " ";
+  display: inline;
+  padding-right: 15px;
+}
+
+.queue h1 {
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+  color: #6CDA6C;
+  font-size: 5rem;
+  line-height: 2rem;
+}
+
+.footer {
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  background: #333;
+  color: #eaeaea;
+  bottom: 0;
+  padding: 5px 0;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.footer a {
+  color: #6CDA6C;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #2AB72A;
+  text-decoration: none;
+}
