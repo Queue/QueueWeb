@@ -5,9 +5,12 @@ import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
 
+// use dotenv only in dev
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-require('stripe')(process.env.STRIPE_API);
+// require for post
+const stripe = require('stripe')(process.env.STRIPE_API);
+//console.log(stripe);
 
 const app = express();
 
@@ -36,8 +39,10 @@ app.post('/stripe/events', (req, res) => {
   console.log(events);
 });
 
-const port = process.env.PORT;
-
-app.listen(port, () => {
-  console.log(`Queue App is running on http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+  if (process.env.NODE_ENV === 'production') {
+    console.log(`Queue is running on http://localhost:${process.env.PORT}`);
+  } else {
+    console.log(`Queue is running on https://www.queueup.site`);
+  }
 });
