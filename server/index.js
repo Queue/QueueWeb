@@ -4,13 +4,13 @@
 import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
+import bodyParser from 'body-parser';
 
 // use dotenv only in dev
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 // require for post
-const stripe = require('stripe')(process.env.STRIPE_API);
-//console.log(stripe);
+require('stripe')(process.env.STRIPE_API);
 
 const app = express();
 
@@ -35,8 +35,12 @@ app.get('/queue', (req, res) => {
 });
 
 app.post('/stripe/events', (req, res) => {
-  const events = JSON.parse(req.body);
-  console.log(events);
+  try {
+    const events = bodyParser.json(req.body);
+    console.log(events);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(process.env.PORT, () => {
