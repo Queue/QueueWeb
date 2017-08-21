@@ -5,7 +5,10 @@ import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
 
-//const stripe = require("stripe")("ENV_VAR_SECRET");
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+
+require('stripe')(process.env.STRIPE_API);
+
 const app = express();
 
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
@@ -28,11 +31,12 @@ app.get('/queue', (req, res) => {
   res.send('ACCESS DENIED');
 });
 
-/*app.post('/stripe/events', (req, res) => {
-  const events = res.json();
-});*/
+app.post('/stripe/events', (req, res) => {
+  const events = JSON.parse(req.body);
+  console.log(events);
+});
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Queue App is running on http://localhost:${port}`);

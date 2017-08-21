@@ -14,8 +14,12 @@ var _helmet2 = _interopRequireDefault(_helmet);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = (0, _express2.default)(); //
+if (process.env.NODE_ENV !== 'production') require('dotenv').config(); //
 // Server for React app and WebHooks
+
+require('stripe')(process.env.STRIPE_API);
+
+var app = (0, _express2.default)();
 
 app.use('/static', _express2.default.static(_path2.default.resolve(__dirname + '/../build/static')));
 
@@ -37,7 +41,12 @@ app.get('/queue', function (req, res) {
   res.send('ACCESS DENIED');
 });
 
-var port = process.env.PORT || 3000;
+app.post('/stripe/events', function (req, res) {
+  var events = JSON.parse(req.body);
+  console.log(events);
+});
+
+var port = process.env.PORT;
 
 app.listen(port, function () {
   console.log('Queue App is running on http://localhost:' + port);
