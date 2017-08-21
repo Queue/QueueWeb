@@ -14,12 +14,12 @@ require('stripe')(process.env.STRIPE_API);
 
 const app = express();
 
-app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
-
 app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views/`);
 
+app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
 app.use(helmet());
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Home');
