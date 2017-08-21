@@ -5,6 +5,7 @@ import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
 
+//const stripe = require("stripe")("ENV_VAR_SECRET");
 const app = express();
 
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
@@ -26,6 +27,10 @@ app.get('/queue/:uid*', (req, res) => {
 app.get('/queue', (req, res) => {
   res.send('ACCESS DENIED');
 });
+
+/*app.post('/stripe/events', (req, res) => {
+  const events = res.json();
+});*/
 
 const port = process.env.PORT || 3000;
 
