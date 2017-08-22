@@ -35,12 +35,9 @@ app.get('/queue', (req, res) => {
 });
 
 app.post('/stripe/events', (req, res) => {
-  try {
-    const events = bodyParser.json(req.body);
-    console.log(events);
-  } catch (error) {
-    console.log(error);
-  }
+  const events = bodyParser.json(req.body);
+  console.log(events);
+  res.send(200);
 });
 
 app.listen(process.env.PORT, () => {
