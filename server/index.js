@@ -35,7 +35,7 @@ app.get('/queue', (req, res) => {
 });
 
 app.post('/stripe/events', (req, res) => {
-  const events = bodyParser.json(req.body);
+  const events = req.body;
   console.log(events);
   res.send(200);
 });
