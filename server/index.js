@@ -45,9 +45,7 @@ app.post('/twiml/events', (req, res) => {
   console.log(events);
   var twilio = require('twilio');
   var twiml = new twilio.TwimlResponse();
-  twiml.message(function() {
-    this.body('The Robots are coming! Head for the hills!');
-  });
+  twiml.message('The Robots are coming! Head for the hills!');
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 });
