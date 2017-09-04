@@ -23,6 +23,7 @@ app.set('views', `${__dirname}/views/`);
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
 app.use(helmet());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.get('/', (req, res) => {
   res.send('Home');
