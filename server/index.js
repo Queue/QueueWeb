@@ -40,8 +40,8 @@ app.post('/stripe/events', (req, res) => {
   res.send(200);
 });
 
-app.post('/twiml/events', (req, res) => {
-  console.log('wtf mate')
+app.get('/twiml/events', (req, res) => {
+  console.log('wtf mate');
   const events = req.body;
   console.log(events);
   var twilio = require('twilio')('SK9c98f50183059bacd3ce562adc241d71');
@@ -52,7 +52,7 @@ app.post('/twiml/events', (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     console.log(`Queue is running on http://localhost:${process.env.PORT}`);
   } else {
     console.log(`Queue is running on https://www.queueup.site`);
