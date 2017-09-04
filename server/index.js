@@ -43,7 +43,7 @@ app.post('/stripe/events', (req, res) => {
 
 app.post('/twiml/events', (req, res) => {
   var twilio = require('twilio');
-  var twiml = new twilio.TwimlResponse();
+  var twiml = twilio.TwimlResponse();
   twiml.message('The Robots are coming! Head for the hills!');
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
