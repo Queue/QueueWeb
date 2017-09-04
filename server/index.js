@@ -45,13 +45,10 @@ app.post('/stripe/events', (req, res) => {
 });
 
 app.post('/twiml/events', (req, res) => {
-  console.log('wtf mate');
-  const events = req.body;
-  console.log(events);
-  var twiml = new twilio.TwimlResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
+  const text = req.body.Body;
+  console.log(text);
   res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.send("<Response><Message>" + req.body.Body + "</Message></Response>");
+  res.send(`<Response><Message>If you wanna cancel just tell us! ${text.message}</Message></Response>`);
 });
 
 app.listen(process.env.PORT, () => {
