@@ -9,6 +9,9 @@ import bodyParser from 'body-parser';
 // use dotenv only in dev
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
+// get twilio client
+const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+
 // require for post
 require('stripe')(process.env.STRIPE_API);
 
@@ -40,11 +43,10 @@ app.post('/stripe/events', (req, res) => {
   res.send(200);
 });
 
-app.get('/twiml/events', (req, res) => {
+app.post('/twiml/events', (req, res) => {
   console.log('wtf mate');
   const events = req.body;
   console.log(events);
-  var twilio = require('twilio')('SK9c98f50183059bacd3ce562adc241d71');
   var twiml = new twilio.TwimlResponse();
   twiml.message('The Robots are coming! Head for the hills!');
   res.writeHead(200, {'Content-Type': 'text/xml'});
