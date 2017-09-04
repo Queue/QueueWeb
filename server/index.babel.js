@@ -24,6 +24,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
+// get twilio client
+var twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+
 // require for post
 require('stripe')(process.env.STRIPE_API);
 
@@ -35,6 +38,7 @@ app.set('views', __dirname + '/views/');
 app.use('/static', _express2.default.static(_path2.default.resolve(__dirname + '/../build/static')));
 app.use((0, _helmet2.default)());
 app.use(_bodyParser2.default.json());
+app.use(_bodyParser2.default.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
   res.send('Home');
@@ -55,14 +59,18 @@ app.post('/stripe/events', function (req, res) {
   res.send(200);
 });
 
-app.get('/twiml/events', function (req, res) {
+app.post('/twiml/events', function (req, res) {
+  console.log('wtf mate');
   var events = req.body;
   console.log(events);
-  res.send(200);
+  var twiml = new twilio.TwimlResponse();
+  twiml.message('The Robots are coming! Head for the hills!');
+  res.writeHead(200, { 'Content-Type': 'text/xml' });
+  res.send("<Response><Message>" + req.body.Body + "</Message></Response>");
 });
 
 app.listen(process.env.PORT, function () {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     console.log('Queue is running on http://localhost:' + process.env.PORT);
   } else {
     console.log('Queue is running on https://www.queueup.site');
