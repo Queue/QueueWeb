@@ -40,7 +40,7 @@ app.post('/stripe/events', (req, res) => {
   res.send(200);
 });
 
-app.get('/twiml/events', (req, res) => {
+app.post('/twiml/events', (req, res) => {
   const events = req.body;
   console.log(events);
   res.send(200);
