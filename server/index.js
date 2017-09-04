@@ -48,7 +48,7 @@ app.post('/twiml/events', (req, res) => {
   const text = req.body.Body;
   console.log(text);
   res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.send(`<Response><Message>If you wanna cancel just tell us! ${text.message}</Message></Response>`);
+  res.send(`<Response><Message>If you wanna cancel just tell us!</Message></Response>`);
 });
 
 app.listen(process.env.PORT, () => {
