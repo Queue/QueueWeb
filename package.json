@@ -29,7 +29,8 @@
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.11",
-    "stripe": "^4.24.0"
+    "stripe": "^4.24.0",
+    "twilio": "^3.6.5"
   },
   "devDependencies": {
     "dotenv": "^4.0.0",
