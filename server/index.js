@@ -40,6 +40,12 @@ app.post('/stripe/events', (req, res) => {
   res.send(200);
 });
 
+app.get('/twiml/events', (req, res) => {
+  const events = req.body;
+  console.log(events);
+  res.send(200);
+});
+
 app.listen(process.env.PORT, () => {
   if (process.env.NODE_ENV === 'production') {
     console.log(`Queue is running on http://localhost:${process.env.PORT}`);

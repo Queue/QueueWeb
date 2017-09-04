@@ -12,21 +12,29 @@ var _helmet = require('helmet');
 
 var _helmet2 = _interopRequireDefault(_helmet);
 
+var _bodyParser = require('body-parser');
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (process.env.NODE_ENV !== 'production') require('dotenv').config(); //
+// use dotenv only in dev
+//
 // Server for React app and WebHooks
 
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+
+// require for post
 require('stripe')(process.env.STRIPE_API);
 
 var app = (0, _express2.default)();
 
-app.use('/static', _express2.default.static(_path2.default.resolve(__dirname + '/../build/static')));
-
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views/');
 
+app.use('/static', _express2.default.static(_path2.default.resolve(__dirname + '/../build/static')));
 app.use((0, _helmet2.default)());
+app.use(_bodyParser2.default.json());
 
 app.get('/', function (req, res) {
   res.send('Home');
@@ -42,12 +50,21 @@ app.get('/queue', function (req, res) {
 });
 
 app.post('/stripe/events', function (req, res) {
-  var events = JSON.parse(req.body);
+  var events = req.body;
   console.log(events);
+  res.send(200);
 });
 
-var port = process.env.PORT;
+app.get('/twiml/events', function (req, res) {
+  var events = req.body;
+  console.log(events);
+  res.send(200);
+});
 
-app.listen(port, function () {
-  console.log('Queue App is running on http://localhost:' + port);
+app.listen(process.env.PORT, function () {
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Queue is running on http://localhost:' + process.env.PORT);
+  } else {
+    console.log('Queue is running on https://www.queueup.site');
+  }
 });
