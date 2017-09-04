@@ -41,6 +41,7 @@ app.post('/stripe/events', (req, res) => {
 });
 
 app.post('/twiml/events', (req, res) => {
+  console.log('wtf mate')
   const events = req.body;
   console.log(events);
   var twilio = require('twilio')('SK9c98f50183059bacd3ce562adc241d71');
