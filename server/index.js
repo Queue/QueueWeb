@@ -50,7 +50,7 @@ app.post('/twiml/events', (req, res) => {
   var twiml = new twilio.TwimlResponse();
   twiml.message('The Robots are coming! Head for the hills!');
   res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  res.send("<Response><Message>" + req.body.Body + "</Message></Response>");
 });
 
 app.listen(process.env.PORT, () => {
