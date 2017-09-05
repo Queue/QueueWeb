@@ -5,9 +5,19 @@ import express from 'express';
 import path from 'path';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
+import * as admin from "firebase-admin";
 
 // use dotenv only in dev
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.PROJECT_ID,
+    privateKey: process.env.PRIVATE_KEY,
+    clientEmail: process.env.CLIENT_EMAIL,
+  }),
+  databaseURL: "https://queue-813f1.firebaseio.com",
+});
 
 // require for post
 require('stripe')(process.env.STRIPE_API);
@@ -19,7 +29,7 @@ app.set('views', `${__dirname}/views/`);
 
 app.use('/static', express.static(path.resolve(`${__dirname}/../build/static`)));
 app.use(helmet());
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
@@ -42,9 +52,16 @@ app.post('/stripe/events', (req, res) => {
 });
 
 app.post('/twiml/events', (req, res) => {
-  var twilio = require('twilio');
-  var twiml = new twilio.twiml.MessagingResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
+  const body = req.body;
+  const twilio = require('twilio');
+  const twiml = new twilio.twiml.MessagingResponse();
+  console.log(body);
+  if (body.Body.toLower() === 'cancel') {
+    admin.database().ref('queuers/private/');
+    twiml.message('You have cancelled your place in Queue. Thank you for using Queue!');
+  } else {
+    twiml.message('The Robots are coming! Head for the hills!');
+  }
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 });

@@ -16,16 +16,33 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _firebaseAdmin = require('firebase-admin');
+
+var admin = _interopRequireWildcard(_firebaseAdmin);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // use dotenv only in dev
-//
+if (process.env.NODE_ENV !== 'production') require('dotenv').config(); //
 // Server for React app and WebHooks
 
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
-
-// get twilio client
-var twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+admin.initializeApp({
+  credential: admin.credential.cert({
+    //    type: process.env.TYPE,
+    projectId: process.env.PROJECT_ID,
+    //    privateKeyId: process.env.PRIVATE_KEY_ID,
+    privateKey: process.env.PRIVATE_KEY,
+    clientEmail: process.env.CLIENT_EMAIL
+    //    clientId: process.env.CLIENT_ID,
+    //    authUri: process.env.AUTH_URI,
+    //    tokenUri: process.env.TOKEN_URI,
+    //    auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
+    //    client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
+  }),
+  databaseURL: "https://queue-813f1.firebaseio.com"
+});
 
 // require for post
 require('stripe')(process.env.STRIPE_API);
@@ -38,7 +55,7 @@ app.set('views', __dirname + '/views/');
 app.use('/static', _express2.default.static(_path2.default.resolve(__dirname + '/../build/static')));
 app.use((0, _helmet2.default)());
 app.use(_bodyParser2.default.json());
-app.use(_bodyParser2.default.urlencoded({ extended: true }));
+app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
   res.send('Home');
@@ -60,13 +77,13 @@ app.post('/stripe/events', function (req, res) {
 });
 
 app.post('/twiml/events', function (req, res) {
-  console.log('wtf mate');
-  var events = req.body;
-  console.log(events);
-  var twiml = new twilio.TwimlResponse();
+  var body = req.body;
+  var twilio = require('twilio');
+  var twiml = new twilio.twiml.MessagingResponse();
+  if (body.Body.toLower() === 'cancel') {}
   twiml.message('The Robots are coming! Head for the hills!');
   res.writeHead(200, { 'Content-Type': 'text/xml' });
-  res.send("<Response><Message>" + req.body.Body + "</Message></Response>");
+  res.end(twiml.toString());
 });
 
 app.listen(process.env.PORT, function () {
