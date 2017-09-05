@@ -1,1 +1,1 @@
-web: yarn serve
+web: node ./server/index.babel.js
