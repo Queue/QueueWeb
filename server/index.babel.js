@@ -31,7 +31,7 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config(); //
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.PROJECT_ID,
-    privateKey: process.env.PRIVATE_KEY,
+    privateKey: JSON.parse(process.env.PRIVATE_KEY),
     clientEmail: process.env.CLIENT_EMAIL
   }),
   databaseURL: "https://queue-813f1.firebaseio.com"
