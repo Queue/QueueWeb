@@ -14,7 +14,7 @@
     "babel": "babel ./server/index.js -o ./server/index.babel.js",
     "serve": "yarn babel && yarn build && node ./server/index.babel.js",
     "prod": "yarn babel && yarn build",
-    "push": "yarn prod && git add -A && git commit -m '$1' && git push origin master"
+    "push": "yarn prod && git add -A && git commit -m $1 && git push origin master"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
