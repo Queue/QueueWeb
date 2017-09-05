@@ -30,16 +30,9 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config(); //
 
 admin.initializeApp({
   credential: admin.credential.cert({
-    //    type: process.env.TYPE,
     projectId: process.env.PROJECT_ID,
-    //    privateKeyId: process.env.PRIVATE_KEY_ID,
     privateKey: process.env.PRIVATE_KEY,
     clientEmail: process.env.CLIENT_EMAIL
-    //    clientId: process.env.CLIENT_ID,
-    //    authUri: process.env.AUTH_URI,
-    //    tokenUri: process.env.TOKEN_URI,
-    //    auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
-    //    client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
   }),
   databaseURL: "https://queue-813f1.firebaseio.com"
 });
@@ -80,8 +73,13 @@ app.post('/twiml/events', function (req, res) {
   var body = req.body;
   var twilio = require('twilio');
   var twiml = new twilio.twiml.MessagingResponse();
-  if (body.Body.toLower() === 'cancel') {}
-  twiml.message('The Robots are coming! Head for the hills!');
+  console.log(body);
+  if (body.Body.toLower() === 'cancel') {
+    admin.database().ref('queuers/private/');
+    twiml.message('You have cancelled your place in Queue. Thank you for using Queue!');
+  } else {
+    twiml.message('The Robots are coming! Head for the hills!');
+  }
   res.writeHead(200, { 'Content-Type': 'text/xml' });
   res.end(twiml.toString());
 });
