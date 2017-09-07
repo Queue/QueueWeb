@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 
   // filter through the data to find the phone number
   getParentsOfPhonenumber(data, phone) {
