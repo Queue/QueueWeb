@@ -63,20 +63,25 @@ app.use(_bodyParser2.default.urlencoded({ extended: false }));
 // home route
 app.get('/', function (req, res) {
 
-  // @TODO use this for fnding queuers by phone number and then cancelling them
+  // @TODO use this for fnding queuers by phone number and then cancelling them.
   // iterate over all queuers - this will not scale well in the future - may need elasticsearch if it get busy
   admin.database().ref('queuers/private').once('value').then(function (snap) {
     var data = snap.val();
-    var queuerKeys = _data2.default.getParentsOfPhonenumber(data, 'PHONENUM');
+    var queuerKeys = _data2.default.getParentsOfPhonenumber(data, '+12174939781');
 
     // get specific entry
     if (queuerKeys) {
+
       admin.database().ref('queuers/private/' + queuerKeys.parent + '/' + queuerKeys.child).once('value').then(function (queuer) {
         var queuerData = queuer.val();
         res.send(queuerData);
       }).catch(function (error) {
         console.log(error);
       });
+    } else {
+
+      res.send('somthin');
+      console.log('Queuer Keys are Fucked');
     }
   }).catch(function (error) {
     console.log(error);
