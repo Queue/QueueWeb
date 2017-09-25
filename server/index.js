@@ -6,7 +6,7 @@ import path from 'path';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import * as admin from 'firebase-admin';
-import __ from './data.js';
+import _ from './data.js';
 
 // use dotenv only in dev
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
@@ -44,23 +44,21 @@ app.get('/', (req, res) => {
   // iterate over all queuers - this will not scale well in the future - may need elasticsearch if it get busy
   admin.database().ref('queuers/private').once('value').then(snap => {
     const data = snap.val();
-    const queuerKeys = __.getParentsOfPhonenumber(data, '+12174939781');
+    const { parent, child } = _.getParentsOfPhonenumber(data, '+12174939781');
 
     // get specific entry
-    if (queuerKeys) {
-
-     admin.database().ref(`queuers/private/${queuerKeys.parent}/${queuerKeys.child}`).once('value').then(queuer => {
+    if (parent || child) {
+     admin.database().ref(`queuers/private/${parent}/${child}`).once('value').then(queuer => {
         const queuerData = queuer.val();
-        res.send(queuerData);
+        console.log(queuerData);
+        //res.send(queuerData);
+        res.send('Shwello World!');
       }).catch(error => {
         console.log(error);
       });
-
     } else {
-
       res.send('somthin');
       console.log('Queuer Keys are Fucked');
-
     }
 
   }).catch(error => {
